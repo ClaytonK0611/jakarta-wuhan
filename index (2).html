@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Wuhan ⟶ Jakarta</title>
+<meta name="description" content="A little corner of the internet that keeps two cities close.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --bg-deep:#0c0a12;
+    --bg-rise:#15111f;
+    --bg-panel:rgba(255,255,255,0.045);
+    --bg-panel-strong:rgba(255,255,255,0.07);
+    --line:rgba(255,255,255,0.09);
+    --rose:#ff758c;
+    --rose-dim:rgba(255,117,140,0.35);
+    --purple:#a855f7;
+    --purple-glow:rgba(168,85,247,0.38);
+    --gold:#ffd88a;
+    --text-hi:#f6f1fb;
+    --text-mid:#c7bcdb;
+    --text-low:#8d80a8;
+    --font-display:'Fraunces', serif;
+    --font-body:'Manrope', -apple-system, sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --radius-lg:28px;
+    --radius-md:18px;
+    --radius-sm:10px;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  html,body{ margin:0; padding:0; }
+
+  body{
+    background:
+      radial-gradient(680px 420px at 12% -6%, rgba(168,85,247,0.16), transparent 60%),
+      radial-gradient(620px 500px at 90% 18%, rgba(255,117,140,0.10), transparent 55%),
+      var(--bg-deep);
+    color:var(--text-hi);
+    font-family:var(--font-body);
+    line-height:1.5;
+    overflow-x:hidden;
+    min-height:100vh;
+    position:relative;
+  }
+
+  /* ambient noise / stars layer */
+  .stars{
+    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.55;
+  }
+  .stars span{
+    position:absolute; width:2px; height:2px; border-radius:50%;
+    background:rgba(255,255,255,0.7);
+    animation:twinkle var(--dur,4s) ease-in-out infinite;
+    animation-delay:var(--delay,0s);
+  }
+  @keyframes twinkle{ 0%,100%{opacity:.15; transform:scale(1);} 50%{opacity:.85; transform:scale(1.4);} }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  a{ color:inherit; }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:2px solid var(--rose); outline-offset:3px; border-radius:6px; }
+
+  .wrap{ max-width:520px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
+
+  section{ padding:64px 0 8px; }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--rose);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:''; width:22px; height:1px; background:var(--rose); display:inline-block; opacity:.7;
+  }
+
+  h1,h2,h3{ font-family:var(--font-display); font-weight:500; margin:0; color:var(--text-hi); }
+  p{ margin:0; color:var(--text-mid); }
+
+  /* ============ HERO ============ */
+  .hero{ padding-top:56px; text-align:left; }
+  .hero h1{
+    font-size:clamp(2.1rem, 9vw, 2.9rem);
+    line-height:1.05;
+    letter-spacing:-.01em;
+  }
+  .hero h1 em{
+    font-style:italic; color:var(--rose); font-weight:400;
+  }
+  .hero-sub{
+    margin-top:14px;
+    font-size:15.5px;
+    max-width:38ch;
+  }
+
+  /* signature: distance thread */
+  .thread{
+    margin-top:38px;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    padding:22px 18px 18px;
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    position:relative;
+    overflow:hidden;
+  }
+  .thread::after{
+    content:''; position:absolute; inset:-40% -20% auto auto; width:220px; height:220px;
+    background:radial-gradient(circle, var(--purple-glow), transparent 70%);
+    filter:blur(10px); pointer-events:none;
+  }
+  .thread-cities{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    font-family:var(--font-mono); font-size:12px; color:var(--text-low);
+    position:relative; z-index:1;
+  }
+  .thread-cities .city{ display:flex; flex-direction:column; gap:4px; }
+  .thread-cities .city b{ font-family:var(--font-body); font-size:15px; font-weight:700; color:var(--text-hi); }
+  .thread-cities .city.you{ text-align:right; }
+
+  .thread-svg{ width:100%; height:64px; display:block; margin:6px 0; position:relative; z-index:1; }
+  .thread-dist{
+    text-align:center; font-family:var(--font-mono); letter-spacing:.04em;
+    font-size:13px; color:var(--text-low); position:relative; z-index:1;
+  }
+  .thread-dist b{ color:var(--gold); font-size:15px; }
+
+  /* dual clocks */
+  .clocks{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px;
+  }
+  .clock-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:16px 14px; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  }
+  .clock-card .loc{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-low);
+    display:flex; align-items:center; gap:6px; margin-bottom:8px;
+  }
+  .dot{ width:6px; height:6px; border-radius:50%; background:var(--rose); box-shadow:0 0 8px var(--rose); flex:none; }
+  .clock-card .time{
+    font-family:var(--font-mono); font-size:clamp(1.5rem,7vw,1.9rem); font-weight:600; color:var(--text-hi); letter-spacing:.01em;
+  }
+  .clock-card .date{ font-size:12px; color:var(--text-low); margin-top:4px; }
+
+  /* ============ COUNTDOWN ============ */
+  .countdown-head{ text-align:left; }
+  .countdown-head h2{ font-size:clamp(1.7rem,7vw,2.2rem); }
+  .countdown-head p{ margin-top:8px; font-size:14.5px; }
+
+  .countdown-grid{
+    margin-top:26px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+  }
+  .count-cell{
+    background:linear-gradient(160deg, var(--bg-panel-strong), var(--bg-panel));
+    border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:14px 4px 12px; text-align:center; position:relative; overflow:hidden;
+  }
+  .count-cell::before{
+    content:''; position:absolute; top:-30%; left:50%; transform:translateX(-50%);
+    width:140%; height:80%; background:radial-gradient(circle, var(--rose-dim), transparent 65%);
+    opacity:.5; pointer-events:none;
+  }
+  .count-num{
+    font-family:var(--font-mono); font-weight:700; font-size:clamp(1.5rem,7.5vw,2rem);
+    color:var(--text-hi); position:relative; z-index:1; font-variant-numeric:tabular-nums;
+  }
+  .count-label{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--text-low); margin-top:4px; position:relative; z-index:1;
+  }
+  .countdown-target{
+    margin-top:14px; font-size:12.5px; color:var(--text-low); text-align:center; font-family:var(--font-mono);
+  }
+  .countdown-target b{ color:var(--rose); font-family:var(--font-body); font-weight:700; }
+
+  /* ============ OPEN WHEN ============ */
+  .section-head{ margin-bottom:20px; }
+  .section-head h2{ font-size:clamp(1.6rem,6.5vw,2rem); }
+  .section-head p{ margin-top:8px; font-size:14.5px; max-width:40ch; }
+
+  .letters-scroll{
+    display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:6px 2px 18px; margin:0 -20px; padding-left:20px; padding-right:20px;
+    scrollbar-width:none;
+  }
+  .letters-scroll::-webkit-scrollbar{ display:none; }
+  .letter-card{
+    scroll-snap-align:start; flex:0 0 auto; width:66vw; max-width:230px;
+    min-height:158px;
+    background:linear-gradient(155deg, var(--bg-panel-strong), var(--bg-panel));
+    border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:20px 16px; text-align:left; color:var(--text-hi);
+    display:flex; flex-direction:column; justify-content:space-between; gap:16px;
+    cursor:pointer; transition:transform .35s var(--ease), border-color .35s var(--ease);
+  }
+  .letter-card:hover, .letter-card:focus-visible{ transform:translateY(-4px); border-color:var(--rose-dim); }
+  .letter-card .mark{ font-size:26px; }
+  .letter-card .cap{ font-family:var(--font-display); font-style:italic; font-size:16.5px; line-height:1.3; }
+  .letter-card .tap{ font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-low); }
+
+  /* modal */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(6,5,10,0.72); backdrop-filter:blur(6px);
+    display:flex; align-items:flex-end; justify-content:center; z-index:50;
+    opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+  }
+  .modal-overlay.open{ opacity:1; pointer-events:auto; }
+  .modal-card{
+    width:100%; max-width:520px; background:var(--bg-rise);
+    border:1px solid var(--line); border-radius:26px 26px 0 0;
+    padding:28px 22px 34px; max-height:82vh; overflow-y:auto;
+    transform:translateY(24px); transition:transform .38s var(--ease);
+    box-shadow:0 -20px 60px rgba(0,0,0,.5);
+  }
+  .modal-overlay.open .modal-card{ transform:translateY(0); }
+  .modal-close{
+    background:var(--bg-panel-strong); border:1px solid var(--line); color:var(--text-mid);
+    width:34px; height:34px; border-radius:50%; font-size:16px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; margin-left:auto; margin-bottom:14px;
+  }
+  .modal-title{ font-family:var(--font-display); font-style:italic; font-size:22px; color:var(--rose); margin-bottom:14px; }
+  .modal-body{ font-size:15px; line-height:1.75; color:var(--text-mid); white-space:pre-line; }
+  .modal-body .sign{ display:block; margin-top:18px; font-family:var(--font-display); font-style:italic; color:var(--text-hi); font-size:17px; }
+
+  /* ============ GALLERY ============ */
+  .gallery-grid{
+    margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  }
+  .gallery-grid a:nth-child(6n+1), .gallery-grid a:nth-child(6n+4){ grid-row: span 1; }
+  .g-card{
+    position:relative; border-radius:var(--radius-md); overflow:hidden; aspect-ratio:4/5;
+    border:1px solid var(--line); background:var(--bg-panel); cursor:pointer;
+    display:block; text-decoration:none;
+  }
+  .g-card img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition:transform .5s var(--ease);
+  }
+  .g-card:hover img, .g-card:focus-visible img{ transform:scale(1.06); }
+  .g-card .overlay{
+    position:absolute; left:0; right:0; bottom:0; padding:10px 10px 9px;
+    background:linear-gradient(0deg, rgba(8,6,14,0.92) 5%, rgba(8,6,14,0.0) 100%);
+  }
+  .g-card .g-date{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.08em; color:var(--rose); text-transform:uppercase; }
+  .g-card .g-cap{ font-size:12px; color:var(--text-hi); margin-top:2px; line-height:1.3; }
+
+  .lightbox{
+    position:fixed; inset:0; z-index:60; background:rgba(6,5,10,0.92);
+    display:flex; align-items:center; justify-content:center; padding:20px;
+    opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+  }
+  .lightbox.open{ opacity:1; pointer-events:auto; }
+  .lightbox-inner{ max-width:480px; width:100%; }
+  .lightbox img{ width:100%; border-radius:16px; display:block; border:1px solid var(--line); }
+  .lightbox .cap-block{ text-align:center; margin-top:14px; }
+  .lightbox .g-date{ font-family:var(--font-mono); font-size:11px; color:var(--rose); letter-spacing:.1em; text-transform:uppercase; }
+  .lightbox .g-cap{ font-family:var(--font-display); font-style:italic; font-size:18px; color:var(--text-hi); margin-top:6px; }
+  .lightbox-close{
+    display:block; margin:22px auto 0; background:var(--bg-panel-strong); border:1px solid var(--line);
+    color:var(--text-mid); width:36px; height:36px; border-radius:50%; font-size:16px; cursor:pointer;
+  }
+
+  /* ============ SECRET BUTTON ============ */
+  .secret{ text-align:center; padding:80px 0 60px; }
+  .secret p.pre{ font-size:13.5px; color:var(--text-low); margin-bottom:18px; }
+  .secret-btn{
+    appearance:none; border:1px solid var(--rose-dim);
+    background:linear-gradient(155deg, rgba(255,117,140,0.16), rgba(168,85,247,0.14));
+    color:var(--text-hi); font-family:var(--font-display); font-style:italic; font-size:17px;
+    padding:16px 30px; border-radius:999px; cursor:pointer;
+    box-shadow:0 0 0 rgba(255,117,140,0); transition:box-shadow .4s var(--ease), transform .2s var(--ease);
+  }
+  .secret-btn:active{ transform:scale(.97); }
+  .secret-btn.lit{ box-shadow:0 0 32px var(--rose-dim); }
+
+  .hearts-field{ position:fixed; inset:0; pointer-events:none; z-index:70; }
+  .heart-particle{
+    position:absolute; bottom:-30px; font-size:22px; opacity:.9;
+    animation:floatUp linear forwards;
+  }
+  @keyframes floatUp{
+    0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:1; }
+    85%{ opacity:.9; }
+    100%{ transform:translateY(-108vh) translateX(var(--drift,20px)) rotate(var(--rot,25deg)); opacity:0; }
+  }
+
+  .secret-note{
+    margin-top:26px; max-width:400px; margin-left:auto; margin-right:auto;
+    background:var(--bg-panel); border:1px solid var(--rose-dim); border-radius:var(--radius-lg);
+    padding:24px 22px; text-align:left; font-size:15px; line-height:1.75; color:var(--text-mid);
+    max-height:0; opacity:0; overflow:hidden; transition:max-height .55s var(--ease), opacity .5s var(--ease), padding .55s var(--ease), margin .55s var(--ease);
+  }
+  .secret-note.show{ max-height:1400px; opacity:1; padding:24px 22px; margin-top:26px; }
+  .secret-note .sign{ display:block; margin-top:16px; font-family:var(--font-display); font-style:italic; color:var(--rose); font-size:17px; }
+
+  footer{
+    text-align:center; padding:40px 0 60px; font-family:var(--font-mono);
+    font-size:11px; letter-spacing:.08em; color:var(--text-low); text-transform:uppercase;
+  }
+
+  @media (min-width:480px){
+    .letter-card{ width:44vw; }
+  }
+
+  /* ============ DISTANCE UNIT TOGGLE ============ */
+  .thread-dist{ display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; }
+  .unit-toggle{
+    appearance:none; border:1px solid var(--rose-dim); background:rgba(255,117,140,0.1);
+    color:var(--rose); font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+    padding:4px 9px; border-radius:999px; cursor:pointer; transition:background .25s var(--ease), transform .15s var(--ease);
+  }
+  .unit-toggle:hover{ background:rgba(255,117,140,0.2); }
+  .unit-toggle:active{ transform:scale(.94); }
+
+  /* ============ CALL WINDOW WIDGET ============ */
+  .callwin{
+    margin-top:12px; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:14px 14px 12px; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  }
+  .callwin-head{
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-low);
+    margin-bottom:10px;
+  }
+  .callwin-head b{ color:var(--gold); font-family:var(--font-body); text-transform:none; letter-spacing:0; font-size:12.5px; font-weight:700; }
+  .callwin-bar{
+    position:relative; height:22px; border-radius:8px; overflow:hidden;
+    background:repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 calc(100%/24 - 1px), rgba(255,255,255,0.09) calc(100%/24 - 1px) calc(100%/24));
+  }
+  .callwin-good{ position:absolute; top:0; bottom:0; background:linear-gradient(90deg, var(--rose-dim), var(--purple-glow)); }
+  .callwin-now{ position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--gold); box-shadow:0 0 6px var(--gold); }
+  .callwin-foot{ margin-top:8px; font-size:11.5px; color:var(--text-low); text-align:center; }
+
+  /* ============ US IN NUMBERS ============ */
+  .stats-grid{ margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .stat-cell{
+    background:linear-gradient(160deg, var(--bg-panel-strong), var(--bg-panel));
+    border:1px solid var(--line); border-radius:var(--radius-md); padding:16px 14px; text-align:left;
+  }
+  .stat-num{ font-family:var(--font-mono); font-weight:700; font-size:clamp(1.25rem,6vw,1.55rem); color:var(--gold); font-variant-numeric:tabular-nums; }
+  .stat-label{ font-size:12px; color:var(--text-low); margin-top:4px; line-height:1.35; }
+
+  /* ============ REASONS CARD ============ */
+  .reasons-card{
+    margin-top:20px; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:26px 22px; text-align:center; position:relative; overflow:hidden;
+  }
+  .reasons-card::before{
+    content:''; position:absolute; inset:-30% -10% auto auto; width:180px; height:180px;
+    background:radial-gradient(circle, var(--rose-dim), transparent 70%); pointer-events:none;
+  }
+  .reason-count{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-low); position:relative; z-index:1; }
+  .reason-text{
+    margin-top:14px; font-family:var(--font-display); font-style:italic; color:var(--text-hi);
+    font-size:18px; line-height:1.45; min-height:74px; display:flex; align-items:center; justify-content:center;
+    position:relative; z-index:1;
+  }
+  .reason-btn{
+    margin-top:16px; appearance:none; border:1px solid var(--rose-dim);
+    background:linear-gradient(155deg, rgba(255,117,140,0.16), rgba(168,85,247,0.14));
+    color:var(--text-hi); font-family:var(--font-body); font-weight:700; font-size:13.5px;
+    padding:12px 22px; border-radius:999px; cursor:pointer; position:relative; z-index:1;
+    transition:transform .2s var(--ease);
+  }
+  .reason-btn:active{ transform:scale(.96); }
+
+  /* ============ QUIZ ============ */
+  .quiz-card{
+    margin-top:20px; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:22px 18px; position:relative; overflow:hidden;
+  }
+  .quiz-progress{ font-family:var(--font-mono); font-size:11px; color:var(--text-low); letter-spacing:.08em; text-transform:uppercase; margin-bottom:12px; }
+  .quiz-q{ font-family:var(--font-display); font-size:19px; color:var(--text-hi); line-height:1.35; margin-bottom:16px; }
+  .quiz-opts{ display:flex; flex-direction:column; gap:9px; }
+  .quiz-opt{
+    appearance:none; text-align:left; border:1px solid var(--line); background:var(--bg-panel-strong);
+    color:var(--text-mid); font-family:var(--font-body); font-size:14px; padding:12px 14px;
+    border-radius:var(--radius-sm); cursor:pointer; transition:border-color .2s var(--ease), background .2s var(--ease);
+  }
+  .quiz-opt:hover{ border-color:var(--rose-dim); }
+  .quiz-opt.correct{ border-color:var(--rose); background:rgba(255,117,140,0.14); color:var(--text-hi); }
+  .quiz-opt.wrong{ border-color:var(--purple); background:rgba(168,85,247,0.12); color:var(--text-hi); opacity:.75; }
+  .quiz-opt[disabled]{ cursor:default; }
+  .quiz-feedback{ margin-top:12px; font-size:13px; color:var(--text-low); min-height:18px; }
+  .quiz-result{ text-align:center; }
+  .quiz-result .score{ font-family:var(--font-mono); font-size:2.2rem; font-weight:700; color:var(--gold); }
+  .quiz-result p{ margin-top:10px; font-size:14px; }
+  .quiz-again{
+    margin-top:16px; appearance:none; border:1px solid var(--line); background:var(--bg-panel-strong);
+    color:var(--text-mid); font-family:var(--font-mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
+    padding:10px 18px; border-radius:999px; cursor:pointer;
+  }
+
+  /* ============ NOTE BACK ============ */
+  .noteback{
+    margin-top:20px; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:22px 18px; text-align:center;
+  }
+  .noteback textarea{
+    width:100%; min-height:88px; margin-top:14px; resize:vertical;
+    background:var(--bg-panel-strong); border:1px solid var(--line); border-radius:var(--radius-sm);
+    color:var(--text-hi); font-family:var(--font-body); font-size:14.5px; padding:12px 14px; line-height:1.5;
+  }
+  .noteback textarea:focus{ border-color:var(--rose-dim); }
+  .noteback-btn{
+    margin-top:14px; appearance:none; border:1px solid var(--rose-dim);
+    background:linear-gradient(155deg, rgba(255,117,140,0.16), rgba(168,85,247,0.14));
+    color:var(--text-hi); font-family:var(--font-body); font-weight:700; font-size:13.5px;
+    padding:12px 24px; border-radius:999px; cursor:pointer; position:relative;
+  }
+  .noteback-status{ margin-top:10px; font-size:12.5px; color:var(--rose); min-height:16px; font-family:var(--font-mono); }
+  .paper-plane{
+    position:fixed; z-index:80; font-size:22px; pointer-events:none;
+    animation:planeFly 1.1s var(--ease) forwards;
+  }
+  @keyframes planeFly{
+    0%{ transform:translate(0,0) rotate(0deg); opacity:1; }
+    100%{ transform:translate(60vw,-70vh) rotate(35deg); opacity:0; }
+  }
+
+  /* ============ BOTTOM NAV ============ */
+  .quicknav{
+    position:fixed; left:50%; bottom:16px; transform:translateX(-50%); z-index:40;
+    display:flex; gap:4px; padding:6px; background:rgba(15,11,24,0.75);
+    border:1px solid var(--line); border-radius:999px; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  .quicknav a{
+    display:flex; align-items:center; justify-content:center; width:38px; height:38px;
+    border-radius:50%; font-size:16px; text-decoration:none; color:var(--text-low);
+    transition:background .25s var(--ease), color .25s var(--ease);
+  }
+  .quicknav a.active{ background:rgba(255,117,140,0.18); color:var(--rose); }
+  body{ padding-bottom:78px; }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars" aria-hidden="true"></div>
+
+<div class="wrap" id="top">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="eyebrow">LDR log — day one</div>
+    <h1>Wuhan to Jakarta,<br><em>a long way from home.</em></h1>
+    <p class="hero-sub">Two timezones, one thread. This page keeps count of the kilometers, the hours, and the reasons I'm still yours from here.</p>
+
+    <div class="thread">
+      <div class="thread-cities">
+        <div class="city">
+          <span>WUHAN, CN</span>
+          <b>Me</b>
+        </div>
+        <div class="city you">
+          <span>JAKARTA, ID</span>
+          <b>You</b>
+        </div>
+      </div>
+      <svg class="thread-svg" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="14" y1="14" x2="286" y2="50" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" stroke-dasharray="3 6"/>
+        <circle cx="14" cy="14" r="5" fill="#a855f7"/>
+        <circle cx="286" cy="50" r="5" fill="#ff758c"/>
+        <circle id="pulseDot" cx="14" cy="14" r="4" fill="#ffd88a"/>
+      </svg>
+      <div class="thread-dist"><span id="distText">exactly <b id="distanceKm">—</b> km of ocean and sky between us</span> <button class="unit-toggle" id="unitToggle" type="button">switch units</button></div>
+    </div>
+
+    <div class="clocks">
+      <div class="clock-card">
+        <div class="loc"><span class="dot"></span>Wuhan</div>
+        <div class="time" id="clockWuhan">--:--:--</div>
+        <div class="date" id="dateWuhan">—</div>
+      </div>
+      <div class="clock-card">
+        <div class="loc"><span class="dot" style="background:var(--purple); box-shadow:0 0 8px var(--purple);"></span>Jakarta</div>
+        <div class="time" id="clockJakarta">--:--:--</div>
+        <div class="date" id="dateJakarta">—</div>
+      </div>
+    </div>
+
+    <div class="callwin" id="callWin">
+      <div class="callwin-head">so, when do we call? <b id="callwinNote">—</b></div>
+      <div class="callwin-bar"><div class="callwin-good" id="callwinGood"></div><div class="callwin-now" id="callwinNow"></div></div>
+      <div class="callwin-foot">gold line = right now, glow band = when we're both usually free</div>
+    </div>
+  </header>
+
+  <!-- ================= COUNTDOWN ================= -->
+  <section id="countdown">
+    <div class="countdown-head">
+      <div class="eyebrow">Countdown</div>
+      <h2>Until I'm home.</h2>
+      <p>Every second on this clock is one second closer to our meet up &lt;3</p>
+    </div>
+
+    <div class="countdown-grid">
+      <div class="count-cell"><div class="count-num" id="cd-days">00</div><div class="count-label">Days</div></div>
+      <div class="count-cell"><div class="count-num" id="cd-hours">00</div><div class="count-label">Hours</div></div>
+      <div class="count-cell"><div class="count-num" id="cd-mins">00</div><div class="count-label">Mins</div></div>
+      <div class="count-cell"><div class="count-num" id="cd-secs">00</div><div class="count-label">Secs</div></div>
+    </div>
+    <div class="countdown-target">Touching down <b>January 17, 2027</b> — Wuhan time.</div>
+
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-cell"><div class="stat-num" id="statDays">—</div><div class="stat-label">days of being officially, annoyingly obsessed with you</div></div>
+      <div class="stat-cell"><div class="stat-num" id="statCalls">—</div><div class="stat-label">video calls survived (rough count, probably higher lol)</div></div>
+      <div class="stat-cell"><div class="stat-num">1</div><div class="stat-label">hour of time difference between us — basically nothing</div></div>
+      <div class="stat-cell"><div class="stat-num">∞</div><div class="stat-label">times you've made me laugh at 2am my time</div></div>
+    </div>
+  </section>
+
+  <!-- ================= REASONS ================= -->
+  <section id="reasons">
+    <div class="section-head">
+      <div class="eyebrow">Tap for proof</div>
+      <h2>Reasons I love you.</h2>
+      <p>Not all of them, cause we'd be here forever, but here's a random one every time you tap.</p>
+    </div>
+    <div class="reasons-card">
+      <div class="reason-count" id="reasonCount">reason 1</div>
+      <div class="reason-text" id="reasonText">tap the button, princess.</div>
+      <button class="reason-btn" id="reasonBtn" type="button">give me another one 🤍</button>
+    </div>
+  </section>
+
+  <!-- ================= OPEN WHEN ================= -->
+  <section id="openwhen">
+    <div class="section-head">
+      <div class="eyebrow">In case of emergency</div>
+      <h2>Open when...</h2>
+      <p>Little envelopes for the hard nights and the ordinary ones. Tap one whenever you need me and I'm not answering fast enough.</p>
+    </div>
+
+    <div class="letters-scroll" id="lettersScroll" role="list">
+      <!-- letter cards injected by JS -->
+    </div>
+  </section>
+
+  <!-- ================= GALLERY / TIMELINE ================= -->
+  <section id="gallery">
+    <div class="section-head">
+      <div class="eyebrow">Evidence</div>
+      <h2>Us, so far.</h2>
+      <p>A running record, in no particular order except the one my heart keeps.</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="quiz">
+    <div class="section-head">
+      <div class="eyebrow">Just for fun</div>
+      <h2>How well do you know us?</h2>
+      <p>Little quiz built from our own memories above. No pressure, but I'm expecting a perfect score.</p>
+    </div>
+    <div class="quiz-card" id="quizCard"></div>
+  </section>
+
+  <!-- ================= SECRET BUTTON ================= -->
+  <section class="secret" id="secretSection">
+    <p class="pre">Only press this if you actually miss me.</p>
+    <button class="secret-btn" id="secretBtn">tap here, princess 🤍</button>
+    <div class="secret-note" id="secretNote">
+      Hey baby, I know by now you're probably already bored with all the coding I gave you, but I hope you still love them.<br><br>
+      I know it'll be a while till we meet again, and there'll be lots of challenges we'll face along the way, but I promise you I'll never stop trying. It means so much to me that you've stayed all these years — from just being a "cinta monyet" to highschool sweethearts.<br><br>
+      It's not the fact that we've been together for so long that makes me happy, but the unconditional love we've put up for each other. We've seen each other grow, cry, and so much more.<br><br>
+      My princess, you're not just a girlfriend to me, but someone I want to marry and build a life with. I'm forever grateful for you. No matter what, no matter the distance, the bumps, the problems we'll face — know that I will never give up. I love you now and forever.
+      <span class="sign">Still yours and always yours from 4,000km away.</span>
+    </div>
+  </section>
+
+  <!-- ================= WRITE BACK ================= -->
+  <section class="secret" id="noteback-section">
+    <div class="noteback">
+      <div class="eyebrow" style="justify-content:center;">Your turn</div>
+      <h3 style="font-size:19px;">Say something back?</h3>
+      <p style="margin-top:8px; font-size:13.5px;">It won't go anywhere except into the air between Wuhan and Jakarta, but I promise I'll feel it.</p>
+      <textarea id="noteInput" placeholder="type something for me, bub..." aria-label="Write a note back"></textarea>
+      <button class="noteback-btn" id="noteSendBtn" type="button">send it across the distance ✈️</button>
+      <div class="noteback-status" id="noteStatus"></div>
+    </div>
+  </section>
+
+  <footer>Built in Jakarta, from Wuhan — updated daily by a heart that misses you</footer>
+</div>
+
+<nav class="quicknav" id="quickNav" aria-label="Quick navigation">
+  <a href="#top" data-label="Home" title="Home">🧵</a>
+  <a href="#countdown" data-label="Countdown" title="Countdown">⏳</a>
+  <a href="#reasons" data-label="Reasons" title="Reasons">💌</a>
+  <a href="#openwhen" data-label="Open when" title="Open when">🌙</a>
+  <a href="#gallery" data-label="Gallery" title="Gallery">📸</a>
+  <a href="#quiz" data-label="Quiz" title="Quiz">🎡</a>
+  <a href="#secretSection" data-label="Secret" title="Secret">🤍</a>
+</nav>
+
+<!-- ================= MODAL (Open When) ================= -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ================= LIGHTBOX (Gallery) ================= -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <img id="lightboxImg" src="" alt="">
+    <div class="cap-block">
+      <div class="g-date" id="lightboxDate"></div>
+      <div class="g-cap" id="lightboxCap"></div>
+    </div>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  </div>
+</div>
+
+<div class="hearts-field" id="heartsField" aria-hidden="true"></div>
+
+<script>
+(function(){
+
+  /* ---------- ambient stars ---------- */
+  var starsEl = document.getElementById('stars');
+  var starCount = 34;
+  for (var i=0;i<starCount;i++){
+    var s = document.createElement('span');
+    s.style.left = (Math.random()*100)+'%';
+    s.style.top = (Math.random()*70)+'%';
+    s.style.setProperty('--dur', (2.5+Math.random()*3.5)+'s');
+    s.style.setProperty('--delay', (Math.random()*4)+'s');
+    starsEl.appendChild(s);
+  }
+
+  /* ---------- dual clocks ---------- */
+  var wuhanFmt = new Intl.DateTimeFormat('en-GB', { timeZone:'Asia/Shanghai', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+  var jakartaFmt = new Intl.DateTimeFormat('en-GB', { timeZone:'Asia/Jakarta', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+  var wuhanDateFmt = new Intl.DateTimeFormat('en-US', { timeZone:'Asia/Shanghai', weekday:'short', day:'numeric', month:'short' });
+  var jakartaDateFmt = new Intl.DateTimeFormat('en-US', { timeZone:'Asia/Jakarta', weekday:'short', day:'numeric', month:'short' });
+
+  var elClockWuhan = document.getElementById('clockWuhan');
+  var elClockJakarta = document.getElementById('clockJakarta');
+  var elDateWuhan = document.getElementById('dateWuhan');
+  var elDateJakarta = document.getElementById('dateJakarta');
+
+  function updateClocks(){
+    var now = new Date();
+    elClockWuhan.textContent = wuhanFmt.format(now);
+    elClockJakarta.textContent = jakartaFmt.format(now);
+    elDateWuhan.textContent = wuhanDateFmt.format(now);
+    elDateJakarta.textContent = jakartaDateFmt.format(now);
+  }
+  updateClocks();
+  setInterval(updateClocks, 1000);
+
+  /* ---------- distance thread (haversine, live-computed) ---------- */
+  var WUHAN = { lat: 30.5928, lon: 114.3055 };
+  var JAKARTA = { lat: -6.2088, lon: 106.8456 };
+
+  function haversineKm(a, b){
+    var R = 6371;
+    var dLat = (b.lat - a.lat) * Math.PI/180;
+    var dLon = (b.lon - a.lon) * Math.PI/180;
+    var lat1 = a.lat * Math.PI/180;
+    var lat2 = b.lat * Math.PI/180;
+    var h = Math.sin(dLat/2)*Math.sin(dLat/2) +
+            Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)*Math.sin(dLon/2);
+    var c = 2*Math.asin(Math.sqrt(h));
+    return R*c;
+  }
+  var distance = Math.round(haversineKm(WUHAN, JAKARTA));
+  document.getElementById('distanceKm').textContent = distance.toLocaleString('en-US');
+
+  var pulseDot = document.getElementById('pulseDot');
+  var pulseProgress = 0;
+  var pulseX0=14, pulseY0=14, pulseX1=286, pulseY1=50;
+  function animatePulse(){
+    pulseProgress += 0.006;
+    if (pulseProgress > 1) pulseProgress = 0;
+    var x = pulseX0 + (pulseX1-pulseX0)*pulseProgress;
+    var y = pulseY0 + (pulseY1-pulseY0)*pulseProgress;
+    pulseDot.setAttribute('cx', x.toFixed(1));
+    pulseDot.setAttribute('cy', y.toFixed(1));
+    requestAnimationFrame(animatePulse);
+  }
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    requestAnimationFrame(animatePulse);
+  }
+
+  /* ---------- countdown ---------- */
+  var targetDate = new Date('2027-01-17T00:00:00+08:00'); // Wuhan time, reunion day
+  var cdDays = document.getElementById('cd-days');
+  var cdHours = document.getElementById('cd-hours');
+  var cdMins = document.getElementById('cd-mins');
+  var cdSecs = document.getElementById('cd-secs');
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function updateCountdown(){
+    var now = new Date();
+    var diff = targetDate.getTime() - now.getTime();
+    if (diff < 0) diff = 0;
+    var totalSeconds = Math.floor(diff/1000);
+    var days = Math.floor(totalSeconds/86400);
+    var hours = Math.floor((totalSeconds%86400)/3600);
+    var mins = Math.floor((totalSeconds%3600)/60);
+    var secs = totalSeconds%60;
+    cdDays.textContent = pad(days);
+    cdHours.textContent = pad(hours);
+    cdMins.textContent = pad(mins);
+    cdSecs.textContent = pad(secs);
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  /* ---------- open when letters ---------- */
+  var letters = [
+    {
+      mark: '🌙',
+      cap: 'when you can\u2019t sleep',
+      title: 'Open when you can\u2019t sleep',
+      body: 'It\u2019s probably later than it should be if you\u2019re reading this. Put your phone away and picture me one time zone away, doing exactly the same thing.\n\nYou don\u2019t have to finish everything today. Tomorrow will still be there, and so will I. Close your eyes and let the countdown on this page do the worrying for both of us \u2014 that\u2019s literally its only job.\n\nGoodnight, princess. I\u2019m already looking forward to your good morning text.',
+      sign: '\u2014 the one keeping the other side of the bed warm from 4,000km away'
+    },
+    {
+      mark: '🫂',
+      cap: 'when you miss me',
+      title: 'Open when you miss me',
+      body: 'Good. Cause me too, hehe.\n\nMissing you is something I do every day, baby. You\u2019re not alone \u2014 I\u2019ll always miss you more :)\n\nDon\u2019t ever stop thinking about me, cause I\u2019ll never stop either. Remember, I\u2019m always one call away. Love you, bub.',
+      sign: '\u2014 the person missing you on a delay, in a different timezone, and even more than you'
+    },
+    {
+      mark: '📚',
+      cap: 'when exams are wrecking you',
+      title: 'Open when exams are wrecking you',
+      body: 'Whatever\u2019s in front of you right now, no matter how hard things are, you\u2019ll get through it. I know you will.\n\nDrink some water. Not coffee. You\u2019ve survived every hard week you\u2019ve ever had, which is a 100% success rate, and I don\u2019t bet against those odds.\n\nI\u2019m proud of you before I even know the results \u2014 I know you tried your best. Text me the second you\u2019re done and I\u2019ll be far more excited about it than the grade deserves.',
+      sign: '\u2014 your loudest, most biased fan club of one'
+    },
+    {
+      mark: '🌧️',
+      cap: 'when it\u2019s raining in Jakarta',
+      title: 'Open when it\u2019s raining in Jakarta',
+      body: 'I know how it is when it\u2019s raining there \u2014 pouring out, and soothing for some reason.\n\nJust know that I miss experiencing that with you, having our talks when it rained and just being there for each other. Can\u2019t wait to see you again, bub.',
+      sign: '\u2014 your boyfriend in a way drier city'
+    },
+    {
+      mark: '🎉',
+      cap: 'when something good happens',
+      title: 'Open when something good happens',
+      body: 'TELL ME IMMEDIATELY \u2014 even if you haven\u2019t finished reading this, tell me. I always want to know. I don\u2019t care what time it is, what day it is, just call me, please? I want to know all the good things that happen in your life in real time, not as a summary three days later. Distance already takes enough from us.\n\nJust know I\u2019m always happy for you \u2014 as long as you\u2019re happy, I\u2019ll always be happy.',
+      sign: '\u2014 your personal hype team, on call 24/7'
+    },
+    {
+      mark: '🗓️',
+      cap: 'when January feels far away',
+      title: 'Open when January feels far away',
+      body: 'Look at the countdown at the top of the page \u2014 that countdown is real. I made it just so you can understand that it only goes one direction: closer to us meeting again.\n\nWe\u2019ve already done the hardest part of all of this \u2014 saying goodbye the first time. I never liked goodbyes, but when it happened with us, it hurt badly. I know our reunion will be one of the best days of my life.',
+      sign: '\u2014 counting down in Wuhan, counting on you in Jakarta'
+    }
+  ];
+
+  var lettersScroll = document.getElementById('lettersScroll');
+  letters.forEach(function(letter, idx){
+    var card = document.createElement('button');
+    card.className = 'letter-card';
+    card.setAttribute('role','listitem');
+    card.setAttribute('type','button');
+    card.innerHTML =
+      '<span class="mark">'+letter.mark+'</span>' +
+      '<span class="cap">'+letter.cap+'</span>' +
+      '<span class="tap">tap to open \u2192</span>';
+    card.addEventListener('click', function(){ openLetterModal(idx); });
+    lettersScroll.appendChild(card);
+  });
+
+  var modalOverlay = document.getElementById('modalOverlay');
+  var modalTitle = document.getElementById('modalTitle');
+  var modalBody = document.getElementById('modalBody');
+  var modalClose = document.getElementById('modalClose');
+  var lastFocused = null;
+
+  function openLetterModal(idx){
+    var letter = letters[idx];
+    modalTitle.textContent = letter.title;
+    modalBody.innerHTML = letter.body.replace(/\n/g,'<br>') + '<span class="sign">'+letter.sign+'</span>';
+    lastFocused = document.activeElement;
+    modalOverlay.classList.add('open');
+    modalClose.focus();
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', function(e){ if (e.target === modalOverlay) closeModal(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){
+      if (modalOverlay.classList.contains('open')) closeModal();
+      if (lightbox.classList.contains('open')) closeLightbox();
+    }
+  });
+
+  /* ---------- gallery / timeline ---------- */
+  var photos = [
+    { src:'assets/photo1.jpg', date:'Graduation Day', cap:'Medals on, bouquet in hand \u2014 the end of one chapter.' },
+    { src:'assets/photo2.jpg', date:'Prom Night', cap:'Batch 31 King & Queen. Still can\u2019t believe that was us.' },
+    { src:'assets/photo3.jpg', date:'Cemilan Bamin', cap:'As usual, arguing about the menu as usual.' },
+    { src:'assets/photo4.jpg', date:'Karwis', cap:'Matching shirts, better view, best company.' },
+    { src:'assets/photo5.jpg', date:'DBL', cap:'Face paint and a jersey. My number one supporter.' },
+    { src:'assets/photo6.jpg', date:'My Soulmate\u2019s Birthday', cap:'You in that amazing dress, I love you.' },
+    { src:'assets/photo7.jpg', date:'Sushi Date', cap:'Somewhere between Wuhan and Jakarta, we found this instead.' },
+    { src:'assets/photo8.jpg', date:'Retreat', cap:'Pooh and Piglet. Don\u2019t ask who picked the costumes.' },
+    { src:'assets/photo9.jpg', date:'Golden Hour', cap:'Barefoot by the water, no plans to be anywhere else.' },
+    { src:'assets/photo10.jpg', date:'First Anniv', cap:'Flowers for you, you being mine. Fair trade.' },
+    { src:'assets/photo11.jpg', date:'Escalades', cap:'Red shirts, loud speakers, and you next to me the whole time.' },
+    { src:'assets/photo12.jpg', date:'Caneta', cap:'The actor and his biggest fan.' },
+    { src:'assets/photo13.jpg', date:'City Skyline', cap:'Just walking, no destination, no rush.' },
+    { src:'assets/photo14.jpg', date:'Ferris Wheel', cap:'The view was fine. You were better.' },
+    { src:'assets/photo15.jpg', date:'Just a Random Date', cap:'Even in a normal day, I love you that much.' }
+  ];
+
+  var galleryGrid = document.getElementById('galleryGrid');
+  photos.forEach(function(photo, idx){
+    var card = document.createElement('button');
+    card.className = 'g-card';
+    card.setAttribute('type','button');
+    card.setAttribute('aria-label', photo.date+': '+photo.cap);
+    card.innerHTML =
+      '<img src="'+photo.src+'" alt="'+photo.cap+'" loading="lazy">' +
+      '<div class="overlay"><div class="g-date">'+photo.date+'</div><div class="g-cap">'+photo.cap+'</div></div>';
+    card.addEventListener('click', function(){ openLightbox(idx); });
+    galleryGrid.appendChild(card);
+  });
+
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxDate = document.getElementById('lightboxDate');
+  var lightboxCap = document.getElementById('lightboxCap');
+  var lightboxClose = document.getElementById('lightboxClose');
+  var lastFocusedGallery = null;
+
+  function openLightbox(idx){
+    var photo = photos[idx];
+    lightboxImg.src = photo.src;
+    lightboxImg.alt = photo.cap;
+    lightboxDate.textContent = photo.date;
+    lightboxCap.textContent = photo.cap;
+    lastFocusedGallery = document.activeElement;
+    lightbox.classList.add('open');
+    lightboxClose.focus();
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocusedGallery) lastFocusedGallery.focus();
+  }
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){ if (e.target === lightbox) closeLightbox(); });
+
+  /* ---------- secret button ---------- */
+  var secretBtn = document.getElementById('secretBtn');
+  var secretNote = document.getElementById('secretNote');
+  var heartsField = document.getElementById('heartsField');
+  var heartEmojis = ['💗','💖','🩷','💜','✨'];
+  var secretOpened = false;
+
+  function launchHearts(){
+    var count = 22;
+    for (var i=0;i<count;i++){
+      (function(){
+        var h = document.createElement('span');
+        h.className = 'heart-particle';
+        h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+        var left = Math.random()*100;
+        var duration = 3.2 + Math.random()*2.2;
+        var delay = Math.random()*0.6;
+        var drift = (Math.random()*140 - 70) + 'px';
+        var rot = (Math.random()*70 - 35) + 'deg';
+        h.style.left = left+'vw';
+        h.style.fontSize = (16 + Math.random()*16)+'px';
+        h.style.animationDuration = duration+'s';
+        h.style.animationDelay = delay+'s';
+        h.style.setProperty('--drift', drift);
+        h.style.setProperty('--rot', rot);
+        heartsField.appendChild(h);
+        setTimeout(function(){ h.remove(); }, (duration+delay)*1000 + 200);
+      })();
+    }
+  }
+
+  secretBtn.addEventListener('click', function(){
+    secretBtn.classList.add('lit');
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      launchHearts();
+    }
+    if (!secretOpened){
+      secretNote.classList.add('show');
+      secretOpened = true;
+      secretBtn.textContent = 'read it again 🤍';
+      secretNote.scrollIntoView({ behavior:'smooth', block:'center' });
+    } else {
+      secretNote.scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+  });
+
+  /* ---------- distance unit toggle ---------- */
+  var unitToggle = document.getElementById('unitToggle');
+  var distText = document.getElementById('distText');
+  var unitModes = ['km','mi','flight'];
+  var unitIdx = 0;
+  function renderDistance(){
+    if (unitModes[unitIdx] === 'km'){
+      distText.innerHTML = 'exactly <b>'+distance.toLocaleString('en-US')+'</b> km of ocean and sky between us';
+    } else if (unitModes[unitIdx] === 'mi'){
+      var mi = Math.round(distance * 0.621371);
+      distText.innerHTML = 'or about <b>'+mi.toLocaleString('en-US')+'</b> miles, if you like it in freedom units';
+    } else {
+      var hrs = (distance / 850).toFixed(1); // ~avg cruise speed km/h
+      distText.innerHTML = 'roughly <b>'+hrs+'</b> hours of flying, straight into your arms';
+    }
+  }
+  renderDistance();
+  unitToggle.addEventListener('click', function(){
+    unitIdx = (unitIdx+1) % unitModes.length;
+    renderDistance();
+  });
+
+  /* ---------- best time to call ---------- */
+  // Wuhan is UTC+8, Jakarta is UTC+7 — only 1 hour apart.
+  // "Good" window: both of us are reasonably awake and free, tuned for evenings.
+  var callwinGood = document.getElementById('callwinGood');
+  var callwinNow = document.getElementById('callwinNow');
+  var callwinNote = document.getElementById('callwinNote');
+  var GOOD_START_WUHAN = 20; // 8pm Wuhan time
+  var GOOD_END_WUHAN = 24;   // midnight Wuhan time
+  callwinGood.style.left = (GOOD_START_WUHAN/24*100)+'%';
+  callwinGood.style.width = ((GOOD_END_WUHAN-GOOD_START_WUHAN)/24*100)+'%';
+
+  function updateCallWindow(){
+    var now = new Date();
+    var wuhanHourStr = new Intl.DateTimeFormat('en-GB', { timeZone:'Asia/Shanghai', hour:'2-digit', hour12:false, minute:'2-digit' }).format(now);
+    var parts = wuhanHourStr.split(':');
+    var wuhanHour = parseInt(parts[0],10) + parseInt(parts[1],10)/60;
+    callwinNow.style.left = (wuhanHour/24*100)+'%';
+    if (wuhanHour >= GOOD_START_WUHAN || wuhanHour < 1){
+      callwinNote.textContent = 'it\u2019s prime time, call me';
+    } else if (wuhanHour >= 6 && wuhanHour < GOOD_START_WUHAN){
+      callwinNote.textContent = 'probably a busy stretch, but text me anyway';
+    } else {
+      callwinNote.textContent = 'i\u2019m likely asleep, dream about me instead';
+    }
+  }
+  updateCallWindow();
+  setInterval(updateCallWindow, 30000);
+
+  /* ---------- us in numbers ---------- */
+  // EDIT ME: set this to the actual day you two became official.
+  var RELATIONSHIP_START = new Date('2022-11-09T00:00:00+07:00');
+  var statDays = document.getElementById('statDays');
+  var statCalls = document.getElementById('statCalls');
+  function updateStats(){
+    var now = new Date();
+    var daysTogether = Math.floor((now.getTime() - RELATIONSHIP_START.getTime()) / 86400000);
+    statDays.textContent = daysTogether.toLocaleString('en-US');
+    statCalls.textContent = Math.floor(daysTogether/3).toLocaleString('en-US')+'+';
+  }
+  updateStats();
+  setInterval(updateStats, 60000);
+
+  /* ---------- reasons i love you ---------- */
+  var reasons = [
+    'the way you still send me good morning texts even when you\u2019re half asleep typing them.',
+    'you remember every small thing i tell you, even the ones i forget i said.',
+    'you fight with me about the menu at cemilan bamin every single time and i live for it.',
+    'you cried at my graduation and pretended you didn\u2019t.',
+    'you\u2019re the loudest person cheering for me at every escalades game, literally hoarse the next day.',
+    'you make an ordinary tuesday feel like an event just by texting me about your day.',
+    'you never let a bad day turn into a bad us.',
+    'you still call me during exam week even though i\u2019m the worst texter alive during exam week.',
+    'you looked so happy in that ferris wheel photo and i think about that smile more than i should admit.',
+    'you chose me, over and over, even when the timezone made it inconvenient.',
+    'you\u2019re somehow both the softest and the most stubborn person i know, and i love both halves.',
+    'you make 4,000km feel like a very solvable problem.'
+  ];
+  var reasonBtn = document.getElementById('reasonBtn');
+  var reasonText = document.getElementById('reasonText');
+  var reasonCount = document.getElementById('reasonCount');
+  var reasonDeck = [];
+  var reasonsShown = 0;
+  function nextReason(){
+    if (reasonDeck.length === 0){
+      reasonDeck = reasons.slice();
+      for (var i = reasonDeck.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random()*(i+1));
+        var tmp = reasonDeck[i]; reasonDeck[i] = reasonDeck[j]; reasonDeck[j] = tmp;
+      }
+    }
+    reasonsShown++;
+    var pick = reasonDeck.pop();
+    reasonText.textContent = pick;
+    reasonCount.textContent = 'reason ' + reasonsShown;
+  }
+  reasonBtn.addEventListener('click', nextReason);
+
+  /* ---------- quiz: how well do you know us ---------- */
+  var quizQuestions = [
+    { q:'What were we crowned as at prom?', opts:['Batch 31 King & Queen','Prom King & Queen only','We didn\u2019t go','Best Dressed'], correct:0, note:'still can\u2019t believe that was us.' },
+    { q:'Who i love more than u', opts:['nobody','no one','u','and only u'], correct:0, allCorrect:true, note:'exactly. there is no version of this where you\u2019re not the answer.' },
+    { q:'What did we wear to Karwis?', opts:['Random outfits','Matching shirts','School uniforms','Costumes'], correct:1, note:'matching shirts, better view, best company.' },
+    { q:'What costumes did we wear at the retreat?', opts:['Batman & Robin','Pooh and Piglet','Mario & Luigi','Just regular clothes'], correct:1, note:'don\u2019t ask who picked those.' },
+    { q:'How many hours\u2019 time difference is there between Wuhan and Jakarta?', opts:['3 hours','5 hours','1 hour','No difference'], correct:2, note:'only 1 hour \u2014 basically nothing, all things considered.' }
+  ];
+  var quizCard = document.getElementById('quizCard');
+  var quizIdx = 0;
+  var quizScore = 0;
+
+  function renderQuiz(){
+    if (quizIdx >= quizQuestions.length){
+      var msg = quizScore === quizQuestions.length
+        ? 'perfect score, obviously. you know us better than i do.'
+        : 'not bad, princess. we\u2019ll make more memories to study for the retake.';
+      quizCard.innerHTML =
+        '<div class="quiz-result"><div class="score">'+quizScore+' / '+quizQuestions.length+'</div>' +
+        '<p>'+msg+'</p>' +
+        '<button class="quiz-again" id="quizAgainBtn" type="button">take it again</button></div>';
+      document.getElementById('quizAgainBtn').addEventListener('click', function(){
+        quizIdx = 0; quizScore = 0; renderQuiz();
+      });
+      return;
+    }
+    var item = quizQuestions[quizIdx];
+    var html = '<div class="quiz-progress">question '+(quizIdx+1)+' of '+quizQuestions.length+'</div>';
+    html += '<div class="quiz-q">'+item.q+'</div>';
+    html += '<div class="quiz-opts">';
+    item.opts.forEach(function(opt, i){
+      html += '<button class="quiz-opt" data-i="'+i+'" type="button">'+opt+'</button>';
+    });
+    html += '</div><div class="quiz-feedback" id="quizFeedback"></div>';
+    quizCard.innerHTML = html;
+    var opts = quizCard.querySelectorAll('.quiz-opt');
+    opts.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var chosen = parseInt(btn.getAttribute('data-i'),10);
+        opts.forEach(function(b){ b.setAttribute('disabled','true'); });
+        if (item.allCorrect || chosen === item.correct){
+          btn.classList.add('correct');
+          quizScore++;
+          document.getElementById('quizFeedback').textContent = 'yep. ' + item.note;
+        } else {
+          btn.classList.add('wrong');
+          opts[item.correct].classList.add('correct');
+          document.getElementById('quizFeedback').textContent = 'close, but no. ' + item.note;
+        }
+        setTimeout(function(){ quizIdx++; renderQuiz(); }, 1400);
+      });
+    });
+  }
+  renderQuiz();
+
+  /* ---------- write back / paper plane ---------- */
+  var noteInput = document.getElementById('noteInput');
+  var noteSendBtn = document.getElementById('noteSendBtn');
+  var noteStatus = document.getElementById('noteStatus');
+  var noteResponses = [
+    'got it. reading it like ten times now.',
+    'sent, received, and already saved somewhere in my head.',
+    'that just made my whole day, no exaggeration.',
+    'noted, and noted forever, actually.'
+  ];
+  noteSendBtn.addEventListener('click', function(){
+    if (!noteInput.value.trim()) {
+      noteStatus.textContent = 'type something first, bub!';
+      return;
+    }
+    var rect = noteSendBtn.getBoundingClientRect();
+    var plane = document.createElement('span');
+    plane.className = 'paper-plane';
+    plane.textContent = '✈️';
+    plane.style.left = rect.left + 'px';
+    plane.style.top = rect.top + 'px';
+    document.body.appendChild(plane);
+    setTimeout(function(){ plane.remove(); }, 1200);
+    noteStatus.textContent = noteResponses[Math.floor(Math.random()*noteResponses.length)];
+    noteInput.value = '';
+  });
+
+  /* ---------- quick nav scrollspy ---------- */
+  var quickNav = document.getElementById('quickNav');
+  var navLinks = Array.prototype.slice.call(quickNav.querySelectorAll('a'));
+  var navSections = navLinks.map(function(link){
+    return document.querySelector(link.getAttribute('href'));
+  });
+  function updateActiveNav(){
+    var pos = window.scrollY + window.innerHeight * 0.35;
+    var activeIdx = 0;
+    navSections.forEach(function(sec, i){
+      if (sec && sec.offsetTop <= pos) activeIdx = i;
+    });
+    navLinks.forEach(function(link, i){
+      link.classList.toggle('active', i === activeIdx);
+    });
+  }
+  window.addEventListener('scroll', updateActiveNav, { passive:true });
+  updateActiveNav();
+
+})();
+</script>
+</body>
+</html>
